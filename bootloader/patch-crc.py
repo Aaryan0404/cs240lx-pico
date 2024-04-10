@@ -18,4 +18,4 @@ while ra < 252:
 
 buffer = buffer[:252] + bytes([(crc >> 0) & 0xFF, (crc >> 8) & 0xFF, (crc >> 16) & 0xFF, (crc >> 24) & 0xFF]) + buffer[256:]
 
-sys.stdout.write(buffer)
+sys.stdout.buffer.write(buffer)
