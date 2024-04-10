@@ -16,9 +16,6 @@ while ra < 252:
     crc ^= crc_table[tableoff]
     ra += 1
 
-buffer[252] = (crc >> 0) & 0xFF
-buffer[253] = (crc >> 8) & 0xFF
-buffer[254] = (crc >> 16) & 0xFF
-buffer[255] = (crc >> 24) & 0xFF
+buffer = buffer[:252] + bytes([(crc >> 0) & 0xFF, (crc >> 8) & 0xFF, (crc >> 16) & 0xFF, (crc >> 24) & 0xFF]) + buffer[256:]
 
 sys.stdout.write(buffer)
