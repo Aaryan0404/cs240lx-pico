@@ -48,6 +48,7 @@ enum {
 
 // Checkout page 260 of rp2040 datasheet
 typedef enum {
+    UART0_RXTX = 2,
     SIO = 5,
     PIO0 = 6,
     PIO1 = 7,
