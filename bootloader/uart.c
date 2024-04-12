@@ -11,6 +11,7 @@ void reset_periph(uint32_t loc) {
 // Setup hardware uart
 void uart_init(hw_uart_t *uart) {
     // 0. Setup UART Pins to correct function
+    gpio_set_function(uart->tx_pin, UART0_RXTX);
 
     if (uart->index != UART0 && uart->index != UART1) {
         return;
