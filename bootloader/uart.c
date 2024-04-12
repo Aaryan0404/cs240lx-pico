@@ -4,24 +4,25 @@
 #include "clock.h"
 
 void reset_periph(uint32_t loc) {
-    PUT32(RESET + CLR_OFFSET, 1 << loc);
+    PUT32(RESET + SET_OFFSET, 1 << loc);
     while(!((GET32(RESET_DONE) >> loc) & 0x1)) {;}
+    PUT32(RESET + CLR_OFFSET, 1 << loc);
 }
 
 // Setup hardware uart
 void uart_init(hw_uart_t *uart) {
     // 0. Setup UART Pins to correct function
-    gpio_set_function(uart->tx_pin, UART0_RXTX);
+    gpio_set_function(uart->tx, UART0_RXTX);
 
     if (uart->index != UART0 && uart->index != UART1) {
         return;
     }
 
-    if (uart->index == UART0) {
+    /*if (uart->index == UART0) {
       reset_periph(RESET_UART0);
     } else {
       reset_periph(RESET_UART1);
-    }
+    }*/
 
     // 1. Setup UART Speed via clk_peri
 

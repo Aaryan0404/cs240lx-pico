@@ -1,5 +1,7 @@
 #include "gpio.h"
+#include "clock.h"
 #include "uart.h"
+#include "sw-uart.h"
 #include <stdint.h>
 
 void cstart() {
@@ -9,22 +11,20 @@ void cstart() {
 
 void notmain() {
     gpio_reset();
+    enable_clock();
+
+    gpio_set_output(0); 
+    gpio_set_input(1); 
+    sw_uart_t uart = sw_uart_init(0,1,57600);
     
     gpio_set_output(15); 
 
-    hw_uart_t uart = {
-      .tx = 0,
-      .rx = 1,
-      .baud_rate = 115200,
-      .index = UART0
-    };
-    uart_init(&uart);
-
     while (1) {
-        uart_putc(&uart, 'a');
+        sw_uart_putc(&uart, 'a');
         gpio_set_on(15);
-        DELAY(0x100000);
+        //DELAY(0x100000);
+        delay_ms(1000);
         gpio_set_off(15);
-        DELAY(0x100000);
+        delay_ms(1000);
     }
 }
