@@ -10,7 +10,7 @@ OBJS := $(CPROGS:.c=.o) $(ASMPROGS:.S=.o)
 
 CFLAGS := -mcpu=cortex-m0plus -mtune=cortex-m0plus -g
 
-all: pi.uf2 pi.list
+all: pi.list pi.uf2
 
 $(CPROGS:.c=.o): %.o: %.c
 	$(GCC) $(CFLAGS) -c $< -o $@
@@ -18,7 +18,7 @@ $(ASMPROGS:.S=.o): %.o: %.S
 	$(GCC) $(CFLAGS) -c $< -o $@
 
 pi.elf: memmap.ld $(OBJS)
-	$(LD) -o $@ -T $<
+	$(LD) -o $@ -T memmap.ld $(OBJS)
 
 pi.list: pi.elf
 	$(OBJDUMP) -d $< > $@
@@ -35,7 +35,7 @@ pi.uf2: pi-patched.bin
 clean:
 	rm -f *.o *.elf *.list *.bin *.uf2
 
-install:
+install: pi.uf2 pi.list
 	sudo mount /dev/sda*1 /mnt/sd
 	sudo cp pi.uf2 /mnt/sd
 	sync
