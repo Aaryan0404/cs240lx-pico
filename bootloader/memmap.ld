@@ -6,7 +6,7 @@ STACK_SIZE = 10K;
 MEMORY
 {
     flash (rw) : ORIGIN = 0x10000000, LENGTH = 2M
-    ram (rwx) : ORIGIN = 0x20000000, LENGTH = 0x40740
+    ram (rwx) : ORIGIN = 0x20000000, LENGTH = 264K
 }
 SECTIONS
 {
