@@ -36,7 +36,7 @@ clean:
 	rm -f *.o *.elf *.list *.bin *.uf2
 
 install: pi.uf2 pi.list
-	sudo mount /dev/sda*1 /mnt/sd
+	sudo mount $(wildcard /dev/sda*1) /mnt/sd
 	sudo cp pi.uf2 /mnt/sd
 	sync
 
